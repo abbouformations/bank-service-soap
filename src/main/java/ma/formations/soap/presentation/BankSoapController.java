@@ -2,7 +2,9 @@ package ma.formations.soap.presentation;
 
 import jakarta.jws.WebMethod;
 import jakarta.jws.WebParam;
+import jakarta.jws.WebResult;
 import jakarta.jws.WebService;
+import jakarta.jws.soap.SOAPBinding;
 import lombok.AllArgsConstructor;
 import ma.formations.soap.common.CommonTools;
 import ma.formations.soap.dtos.bankaccount.AddBankAccountRequest;
@@ -25,50 +27,94 @@ import java.util.List;
 
 @Component
 @WebService(serviceName = "BankWS")
+@SOAPBinding
 @AllArgsConstructor
 public class BankSoapController {
 
     private final IBankAccountService bankAccountService;
+    private final ICustomerService customerService;
     private ITransactionService transactionService;
     private CommonTools commonTools;
-    private final ICustomerService customerService;
 
     @WebMethod
-    public  List<CustomerDto> customers() {
+
+    /**
+     *
+     @WebResult was user in order to replace return balise
+     by Customer balise in SOAP Response.
+     */
+    @WebResult(name = "Customer")
+    public List<CustomerDto> customers() {
         return customerService.getAllCustomers();
     }
 
+
     @WebMethod
+    /**
+     * @WebResult was user in order to replace return balise
+     * by Customer balise in SOAP Response.
+     */
+    @WebResult(name = "Customer")
     public CustomerDto customerByIdentity(@WebParam(name = "identity") String identity) {
         return customerService.getCustomByIdentity(identity);
     }
 
     @WebMethod
-    public AddCustomerResponse createCustomer(@WebParam(name = "dto") AddCustomerRequest dto) {
+    /**
+     * @WebResult was user in order to replace return balise
+     * by Customer balise in SOAP Response.
+     */
+    @WebResult(name = "Customer")
+    public AddCustomerResponse createCustomer(@WebParam(name = "Customer") AddCustomerRequest dto) {
         return customerService.createCustomer(dto);
     }
 
+    /**
+     * @WebResult was user in order to replace return balise
+     * by BankAccount balise in SOAP Response.
+     */
+    @WebResult(name = "BankAccount")
     @WebMethod
-   public  List<BankAccountDto> bankAccounts() {
+    public List<BankAccountDto> bankAccounts() {
         return bankAccountService.getAllBankAccounts();
     }
 
     @WebMethod
-    public BankAccountDto bankAccountByRib(@WebParam(name="rib") String rib) {
+    /**
+     * @WebResult was user in order to replace return balise
+     * by BankAccount balise in SOAP Response.
+     */
+    @WebResult(name = "BankAccount")
+    public BankAccountDto bankAccountByRib(@WebParam(name = "rib") String rib) {
         return bankAccountService.getBankAccountByRib(rib);
     }
 
 
+    /**
+     * @WebResult was user in order to replace return balise
+     * by BankAccount balise in SOAP Response.
+     */
+    @WebResult(name = "BankAccount")
     @WebMethod
-    public AddBankAccountResponse createBankAccount(@WebParam(name="bankAccountRequest") AddBankAccountRequest dto) {
+    public AddBankAccountResponse createBankAccount(@WebParam(name = "bankAccountRequest") AddBankAccountRequest dto) {
         return bankAccountService.saveBankAccount(dto);
     }
 
+    /**
+     * @WebResult was user in order to replace return balise
+     * by Transaction balise in SOAP Response.
+     */
+    @WebResult(name = "Transaction")
     @WebMethod
     public AddWirerTransferResponse createWirerTransfer(@WebParam(name = "wirerTransferRequest") AddWirerTransferRequest dto) {
         return transactionService.wiredTransfer(dto);
     }
 
+    /**
+     * @WebResult was user in order to replace return balise
+     * by Transaction balise in SOAP Response.
+     */
+    @WebResult(name = "Transaction")
     @WebMethod
     public List<TransactionDto> getTransactions(@WebParam(name = "rib") String rib, @WebParam(name = "dateFrom") String dateFrom, @WebParam(name = "dateTo") String dateTo) {
         Date from = null;

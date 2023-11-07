@@ -1,5 +1,6 @@
 package ma.formations.soap.dtos.customer;
 
+import jakarta.jws.WebResult;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
