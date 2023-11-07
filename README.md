@@ -1,6 +1,6 @@
-# bank-service-graphql
-- Understand the SOAP standard.
-- Understand the syntax of the WSDL file.
+# bank-service-soap
+- Understand how to integrate JAXWS within Spring.
+- Testing the web service using SOAP UI.
 
 We will develop a web service with SOAP called bank-service-soap using JAXWS for a given bank which offers the following services:
 - Consult the list of bank customers.
